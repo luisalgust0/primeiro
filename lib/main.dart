@@ -22,32 +22,66 @@ class HomePage extends StatefulWidget {
 
   HomePage() {
     items = [];
-    items.add(Item(title: "item 1", done: false));
-    items.add(Item(title: "item 2", done: true));
-    items.add(Item(title: "item 3", done: false));
-
-    var itemTest = Item(title: 'itemtest1', done: false);
-    var item1 = items[0].toJson();
-    var teste = itemTest.toJson();
-
-    var test2 = Item.fromJson(item1);
+    items.add(Item(id: 0, title: "item 1", done: false));
+    items.add(Item(id: 1, title: "item 2", done: true));
+    items.add(Item(id: 3, title: "item 3", done: false));
   }
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  void addTarefa() {
+    if (novocontrolador.text.isEmpty) return;
+    setState(() {
+      this
+          .widget
+          .items
+          .add(Item(id: 0, title: this.novocontrolador.text, done: false));
+      this.novocontrolador.clear();
+    });
+  }
+
+  var novocontrolador = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('primeiroApp'),
+        title: TextFormField(
+          controller: this.novocontrolador,
+          keyboardType: TextInputType.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 19,
+          ),
+          decoration: InputDecoration(
+            labelText: 'NOVA TAREFA',
+            labelStyle: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: widget.items.length,
         itemBuilder: (BuildContext ctxt, int index) {
-          return Text(widget.items[index].title);
+          final item = widget.items[index];
+          return CheckboxListTile(
+            title: Text(item.title),
+            key: Key(item.id.toString()),
+            value: item.done,
+            onChanged: (value) {
+              setState(() {
+                item.done = value;
+              });
+            },
+          );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: addTarefa,
+        backgroundColor: Colors.blue,
       ),
     );
   }

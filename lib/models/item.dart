@@ -2,7 +2,9 @@ class Item {
   String title;
   bool done;
 
-  Item({this.title, this.done});
+  int id;
+
+  Item({this.id, this.title, this.done});
 
   Item.fromJson(Map<String, dynamic> json1) {
     title = json1['title'];
@@ -14,9 +16,5 @@ class Item {
     retorno['title'] = this.title;
     retorno['done'] = this.done;
     return retorno;
-  }
-
-  String oi() {
-    return 'ola';
   }
 }
