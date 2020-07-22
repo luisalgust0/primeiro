@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "238514765456",
+    "firebase_url": "https://primeiro-1797c.firebaseio.com",
+    "project_id": "primeiro-1797c",
+    "storage_bucket": "primeiro-1797c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238514765456:android:9c8ed46b86a3100b52a215",
+        "android_client_info": {
+          "package_name": "com.example.primeiro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238514765456-sakr07cde158vktgt2062bf3ia35vkhn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.primeiro",
+            "certificate_hash": "e4adf8fdfbccc2c9c1ea7b4dcee6c8ac9ddf434b"
+          }
+        },
+        {
+          "client_id": "238514765456-smm4a7kuudd9003lh1bu2u42eulihb74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIVjiqQUFAQeYXr8HAtRiF8Bni-47RwXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238514765456-smm4a7kuudd9003lh1bu2u42eulihb74.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

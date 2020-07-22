@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:primeiro/models/pagina.login.dart';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/item.dart';
 
 //root do aplicativo
@@ -10,21 +15,22 @@ class MeuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: Paginalogin(),
       title: 'PrimeiroApp',
     );
   }
 }
 
 //stl da homepage do aplicativo
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   var items = new List<Item>();
 
   HomePage() {
     items = [];
-    items.add(Item(id: 0, title: "item 1", done: false));
-    items.add(Item(id: 1, title: "item 2", done: true));
-    items.add(Item(id: 3, title: "item 3", done: false));
+    // items.add(Item(id: 0, title: "item 1", done: false));
+    // items.add(Item(id: 1, title: "item 2", done: true));
+    // items.add(Item(id: 2, title: "item 3", done: false));
   }
   @override
   _HomePageState createState() => _HomePageState();
@@ -39,6 +45,7 @@ class _HomePageState extends State<HomePage> {
           .items
           .add(Item(id: 0, title: this.novocontrolador.text, done: false));
       this.novocontrolador.clear();
+      salvar();
     });
   }
 
@@ -66,15 +73,25 @@ class _HomePageState extends State<HomePage> {
         itemCount: widget.items.length,
         itemBuilder: (BuildContext ctxt, int index) {
           final item = widget.items[index];
-          return CheckboxListTile(
-            title: Text(item.title),
-            key: Key(item.id.toString()),
-            value: item.done,
-            onChanged: (value) {
-              setState(() {
-                item.done = value;
-              });
+
+          return Dismissible(
+            onDismissed: (direction) {
+              excluir(item);
             },
+            background: Container(
+              color: Colors.red.withOpacity(0.4),
+            ),
+            key: Key(item.id.toString()),
+            child: CheckboxListTile(
+              title: Text(item.title),
+              value: item.done,
+              onChanged: (value) {
+                setState(() {
+                  item.done = value;
+                  salvar();
+                });
+              },
+            ),
           );
         },
       ),
@@ -84,5 +101,38 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blue,
       ),
     );
+  }
+
+  salvar() async {
+    var pacoteshar = await SharedPreferences.getInstance();
+    await pacoteshar.setString("lista", jsonEncode(widget.items));
+  }
+
+  Future carregar() async {
+    var pacoteshar = await SharedPreferences.getInstance();
+
+    var data = pacoteshar.getString('lista');
+    if (data != null) {
+      Iterable decoded = jsonDecode(data);
+
+      var teste = decoded.map((it) => Item.fromJson(it)).toList();
+
+      setState(() {
+        this.widget.items = teste;
+      });
+    } else {
+      print('sem dados');
+    }
+  }
+
+  _HomePageState() {
+    carregar();
+  }
+
+  void excluir(item) {
+    setState(() {
+      this.widget.items.remove(item);
+      salvar();
+    });
   }
 }
