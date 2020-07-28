@@ -11,6 +11,15 @@ class Item {
     done = json1['done'];
   }
 
+  static Item fromSnapshot(dynamic value) {
+    Item item = Item(
+      title: value['title'],
+      id: value['id'],
+      done: value['done'],
+    );
+    return item;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> retorno = new Map<String, dynamic>();
     retorno['title'] = this.title;

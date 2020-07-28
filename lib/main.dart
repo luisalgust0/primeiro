@@ -117,25 +117,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   salvar() async {
+    SharedPreferences.getInstance().then((value) => null);
     var pacoteshar = await SharedPreferences.getInstance();
     await pacoteshar.setString("lista", jsonEncode(widget.items));
   }
 
   Future carregar() async {
-    var pacoteshar = await SharedPreferences.getInstance();
-
-    var data = pacoteshar.getString('lista');
-    if (data != null) {
-      Iterable decoded = jsonDecode(data);
-
-      var teste = decoded.map((it) => Item.fromJson(it)).toList();
+    this.colItem.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
 
       setState(() {
-        this.widget.items = teste;
+        values.forEach((key, value) {
+          var itemS = Item.fromSnapshot(value);
+          widget.items.add(itemS);
+        });
       });
-    } else {
-      print('sem dados');
-    }
+    });
+    // var pacoteshar = await SharedPreferences.getInstance();
+
+    // var data = pacoteshar.getString('lista');
+    // if (data != null) {
+    //   Iterable decoded = jsonDecode(data);
+
+    //   var teste = decoded.map((it) => Item.fromJson(it)).toList();
+
+    //   setState(() {
+    //     this.widget.items = teste;
+    //   });
+    // } else {
+    //   print('sem dados');
+    // }
   }
 
   void excluir(item) {
