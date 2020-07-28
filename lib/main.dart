@@ -133,20 +133,6 @@ class _HomePageState extends State<HomePage> {
         });
       });
     });
-    // var pacoteshar = await SharedPreferences.getInstance();
-
-    // var data = pacoteshar.getString('lista');
-    // if (data != null) {
-    //   Iterable decoded = jsonDecode(data);
-
-    //   var teste = decoded.map((it) => Item.fromJson(it)).toList();
-
-    //   setState(() {
-    //     this.widget.items = teste;
-    //   });
-    // } else {
-    //   print('sem dados');
-    // }
   }
 
   void excluir(item) {
