@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:primeiro/models/pagina.login.dart';
 
 import 'package:flutter/material.dart';
@@ -37,16 +38,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  _HomePageState() {
+    colItem = dataBase.reference().child('items');
+    carregar();
+  }
+
+  FirebaseDatabase dataBase = FirebaseDatabase();
+
+  DatabaseReference colItem;
+
   void addTarefa() {
     if (novocontrolador.text.isEmpty) return;
-    setState(() {
+    /* setState(() {
       this
           .widget
           .items
           .add(Item(id: 0, title: this.novocontrolador.text, done: false));
       this.novocontrolador.clear();
       salvar();
-    });
+    }); */
+
+    this.colItem.push().set(
+        Item(id: 0, title: this.novocontrolador.text, done: false).toJson());
   }
 
   var novocontrolador = TextEditingController();
@@ -123,10 +136,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       print('sem dados');
     }
-  }
-
-  _HomePageState() {
-    carregar();
   }
 
   void excluir(item) {

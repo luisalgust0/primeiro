@@ -14,6 +14,7 @@ class Item {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> retorno = new Map<String, dynamic>();
     retorno['title'] = this.title;
+    retorno['id'] = this.id;
     retorno['done'] = this.done;
     return retorno;
   }
