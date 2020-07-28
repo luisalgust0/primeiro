@@ -135,6 +135,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+//teste
   void excluir(item) {
     setState(() {
       this.widget.items.remove(item);
